@@ -2,7 +2,7 @@ package com.java_data;
 
 import java.io.Serializable;
 import java.util.Date;
-public class Tweet implements Comparable, Serializable {
+public class Tweet implements Comparable<Tweet>, Serializable {
   private static final long serialVersionUID = -410072778031177119L;
   private String mAuthor;
   private String mDescription;
@@ -21,14 +21,13 @@ public class Tweet implements Comparable, Serializable {
   }
 
   @Override
-  public int compareTo(Object obj) {
-    Tweet otherTweet = (Tweet) obj;
-    if (equals(otherTweet)) {
+  public int compareTo(Tweet other) {
+    if (equals(other)) {
       return 0;
     }
-    int dateCmp = mCreationDate.compareTo(otherTweet.mCreationDate);
+    int dateCmp = mCreationDate.compareTo(other.mCreationDate);
     if (dateCmp == 0) {
-      return mDescription.compareTo(otherTweet.mDescription);
+      return mDescription.compareTo(other.mDescription);
     }
     return dateCmp;
   }
