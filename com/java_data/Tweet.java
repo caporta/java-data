@@ -1,7 +1,11 @@
 package com.java_data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 public class Tweet implements Comparable<Tweet>, Serializable {
   private static final long serialVersionUID = -410072778031177119L;
   private String mAuthor;
@@ -44,10 +48,27 @@ public class Tweet implements Comparable<Tweet>, Serializable {
     return mCreationDate;
   }
 
-  public String[] getWords() {
-    return mDescription.toLowerCase().split("[^\\w#@']+");
+  public List<String> getWords() {
+    String[] words = mDescription.toLowerCase().split("[^\\w#@']+");
+    return Arrays.asList(words);
   }
 
+  private List<String> getSpecialWords(String symbol) {
+    List<String> results = new ArrayList<String>();
+    for (String word : getWords()) {
+      if (word.startsWith(symbol)) {
+        results.add(word);
+      }
+    }
+    return results;
+  }
 
+  public List<String> getHashTags() {
+    return getSpecialWords("#");
+  }
+
+  public List<String> getMentions() {
+    return getSpecialWords("@");
+  }
 
 }
