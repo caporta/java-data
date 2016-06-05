@@ -1,5 +1,8 @@
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 import com.java_data.Tweet;
 import com.java_data.Tweets;
 
@@ -30,12 +33,15 @@ public class Display {
     Tweet[] tweets = Tweets.load();
 
     System.out.printf("There are %d tweets. %n", tweets.length);
-    System.out.println("Mentions:");
+
+    Set<String> allHashTags = new HashSet<String>();
+    Set<String> allMentions = new TreeSet<String>();
     for (Tweet twt : tweets) {
-      for (String mention : twt.getMentions()) {
-        System.out.println(mention);
-      }
+      allHashTags.addAll(twt.getHashTags());
+      allMentions.addAll(twt.getMentions());
     }
+    System.out.printf("Hashtags: %s %n", allHashTags);
+    System.out.printf("Mentions: %s %n", allMentions);
 
   }
 }
